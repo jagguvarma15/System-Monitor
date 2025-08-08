@@ -55,16 +55,16 @@ Download the latest release for your platform from [GitHub Releases](https://git
 
 ```bash
 # Run continuous monitoring
-sysmon
+system-monitor
 
 # One-time system summary
-sysmon summary
+system-monitor summary
 
 # Generate configuration file
-sysmon generate-config
+system-monitor generate-config
 
 # Show help
-sysmon --help
+system-monitor --help
 ```
 
 ## Usage
@@ -73,20 +73,20 @@ sysmon --help
 
 | Command | Description |
 |---------|-------------|
-| `sysmon` | Default continuous monitoring (30-second intervals) |
-| `sysmon summary` | One-time system summary |
-| `sysmon generate-config` | Generate configuration file |
-| `sysmon monitor` | Explicit monitor mode |
-| `sysmon --once` | Run once and exit |
-| `sysmon --help` | Show help information |
-| `sysmon --version` | Show version information |
+| `system-monitor` | Default continuous monitoring (30-second intervals) |
+| `system-monitor summary` | One-time system summary |
+| `system-monitor generate-config` | Generate configuration file |
+| `system-monitor monitor` | Explicit monitor mode |
+| `system-monitor --once` | Run once and exit |
+| `system-monitor --help` | Show help information |
+| `system-monitor --version` | Show version information |
 
 ### Configuration
 
 Generate a configuration file to customize thresholds and display options:
 
 ```bash
-sysmon generate-config
+system-monitor generate-config
 ```
 
 This creates a `config.toml` file:

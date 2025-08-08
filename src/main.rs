@@ -5,7 +5,7 @@ use crossterm::{
     execute,
     terminal::{Clear, ClearType},
 };
-use log::{info, warn};
+use log::warn;
 use serde::{Deserialize, Serialize};
 use std::{fs, io::Write, path::Path, thread, time::Duration};
 use sysinfo::{Disks, System};
@@ -378,10 +378,9 @@ fn display_system_info(sys: &System, disks: &Disks, config: &Config) {
     println!("{:<8} {:<20} {:<8} {:<10}", "PID", "NAME", "CPU%", "MEMORY");
     println!("{}", "-".repeat(50));
 
-    for (_i, process) in processes
+    for process in processes
         .iter()
         .take(config.display.max_processes_to_display)
-        .enumerate()
     {
         let cpu_color = get_usage_color(process.cpu_usage(), 50.0, 80.0, config.display.use_colors);
         println!(
@@ -443,7 +442,6 @@ fn main() {
     match cli.command {
         Some(Commands::GenerateConfig) => {
             generate_config(&cli.config);
-            return;
         }
         Some(Commands::Summary) => {
             let mut sys = System::new_all();
@@ -451,11 +449,9 @@ fn main() {
             sys.refresh_all();
             disks.refresh();
             display_system_info(&sys, &disks, &config);
-            return;
         }
         Some(Commands::Monitor) => {
             run_monitor(&config, cli.once);
-            return;
         }
         None => {
             // Default behavior - run monitor

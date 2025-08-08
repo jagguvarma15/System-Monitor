@@ -1,5 +1,12 @@
 # System Monitor
 
+[![Crates.io](https://img.shields.io/crates/v/system-monitor.svg)](https://crates.io/crates/system-monitor)
+[![Crates.io Downloads](https://img.shields.io/crates/d/system-monitor.svg)](https://crates.io/crates/system-monitor)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://github.com/jagguvarma15/system-monitor/workflows/Rust%20CI/badge.svg)](https://github.com/yourusername/system-monitor/actions)
+[![Rust](https://img.shields.io/badge/rust-1.70%2B-orange.svg)](https://www.rust-lang.org)
+[![Platform](https://img.shields.io/badge/platform-linux%20%7C%20macos%20%7C%20windows-lightgrey.svg)](https://github.com/yourusername/system-monitor)
+
 A powerful, configurable system monitoring tool built in Rust that provides real-time insights into your system's performance.
 
 ## Features
@@ -9,64 +16,80 @@ A powerful, configurable system monitoring tool built in Rust that provides real
 - **Configurable Thresholds**: Custom warning and critical levels
 - **Alert System**: Automatic alerts with logging when thresholds are exceeded
 - **Multiple Display Modes**: Continuous monitoring, one-time summary, or single run
-- **Professional Output**: Clean, organized display with timestamps
 - **Cross-platform**: Works on Linux, macOS, and Windows
+- **Professional Output**: Clean, organized display with timestamps
 
 ## Installation
 
-### Prerequisites
-- Rust 1.70 or later
-- Cargo (comes with Rust)
+### Using Cargo (Recommended)
 
-### Build from Source
+```bash
+cargo install system-monitor
+```
+
+### Using Homebrew (macOS/Linux)
+
+```bash
+brew install system-monitor
+```
+
+### Using Chocolatey (Windows)
+
+```bash
+choco install system-monitor
+```
+
+### From Source
+
 ```bash
 git clone https://github.com/yourusername/system-monitor.git
 cd system-monitor
-cargo build --release
+cargo install --path .
 ```
 
-### Run Directly
+### Download Pre-built Binaries
+
+Download the latest release for your platform from [GitHub Releases](https://github.com/yourusername/system-monitor/releases).
+
+## Quick Start
+
 ```bash
-cargo run
+# Run continuous monitoring
+sysmon
+
+# One-time system summary
+sysmon summary
+
+# Generate configuration file
+sysmon generate-config
+
+# Show help
+sysmon --help
 ```
 
 ## Usage
 
 ### Basic Commands
 
-```bash
-# Default continuous monitoring (30-second intervals)
-cargo run
-
-# Generate configuration file
-cargo run -- generate-config
-
-# One-time system summary
-cargo run -- summary
-
-# Explicit monitor mode
-cargo run -- monitor
-
-# Run once and exit
-cargo run -- --once
-
-# Custom config file
-cargo run -- --config custom.toml
-
-# Help and version
-cargo run -- --help
-cargo run -- --version
-```
+| Command | Description |
+|---------|-------------|
+| `sysmon` | Default continuous monitoring (30-second intervals) |
+| `sysmon summary` | One-time system summary |
+| `sysmon generate-config` | Generate configuration file |
+| `sysmon monitor` | Explicit monitor mode |
+| `sysmon --once` | Run once and exit |
+| `sysmon --help` | Show help information |
+| `sysmon --version` | Show version information |
 
 ### Configuration
 
 Generate a configuration file to customize thresholds and display options:
 
 ```bash
-cargo run -- generate-config
+sysmon generate-config
 ```
 
-This creates a `config.toml` file with the following structure:
+This creates a `config.toml` file:
 
 ```toml
 [general]
@@ -89,11 +112,6 @@ disk_warning = 70.0
 disk_critical = 90.0
 swap_warning = 70.0
 swap_critical = 90.0
-
-[alerts]
-enable_desktop_notifications = false
-enable_email_alerts = false
-enable_sound_alerts = false
 ```
 
 ## Sample Output
@@ -138,56 +156,69 @@ Press Ctrl+C to exit...
 
 ## Color Coding
 
-- **Green**: Normal usage (below warning threshold)
-- **Yellow**: Warning level (above warning, below critical)
-- **Red**: Critical level (above critical threshold)
+| Color | Meaning | Usage Range |
+|-------|---------|-------------|
+| Green | Normal | Below warning threshold |
+| Yellow | Warning | Warning to critical threshold |
+| Red | Critical | Above critical threshold |
+
+## Configuration Options
+
+### General Settings
+- `refresh_interval`: Update frequency in seconds
+- `log_alerts`: Enable/disable alert logging
+- `log_file`: Path to log file
+
+### Display Options
+- `show_progress_bars`: Visual progress bars
+- `use_colors`: Colored output
+- `show_per_core_cpu`: Individual CPU core display
+- `max_processes_to_display`: Number of top processes
+
+### Threshold Settings
+Customize warning and critical levels for:
+- CPU usage
+- Memory usage  
+- Disk usage
+- Swap usage
 
 ## Alert System
 
 When thresholds are exceeded, alerts are:
-- Logged to console
+- Logged to console with timestamps
 - Written to log file (if enabled)
-- Can trigger desktop notifications (configurable)
-
-## Dependencies
-
-- `sysinfo` - System information gathering
-- `clap` - Command-line argument parsing
-- `serde` & `toml` - Configuration file handling
-- `colored` - Terminal color output
-- `chrono` - Date and time handling
-- `log` & `env_logger` - Logging functionality
-- `crossterm` - Cross-platform terminal manipulation
+- Can trigger desktop notifications (future feature)
 
 ## Development
 
-### Project Structure
-```
-system-monitor/
-├── src/
-│   └── main.rs          # Main application code
-├── Cargo.toml           # Project dependencies
-├── config.toml          # Configuration file (generated)
-├── README.md            # This file
-└── .gitignore          # Git ignore rules
-```
+### Prerequisites
+- Rust 1.70 or later
+- Cargo (comes with Rust)
 
 ### Building
 ```bash
-# Debug build
-cargo build
-
-# Release build (optimized)
+git clone https://github.com/yourusername/system-monitor.git
+cd system-monitor
 cargo build --release
-
-# Run tests
-cargo test
-
-# Check code without building
-cargo check
 ```
 
+### Testing
+```bash
+cargo test
+cargo clippy
+cargo fmt -- --check
+```
+
+## Performance
+
+- **Low Resource Usage**: Minimal CPU and memory footprint
+- **Fast Startup**: Sub-second initialization
+- **Efficient Updates**: Optimized refresh cycles
+- **Cross-platform**: Native performance on all platforms
+
 ## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -202,25 +233,25 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Roadmap
 
 - [ ] Network bandwidth monitoring
-- [ ] Docker container monitoring
+- [ ] Docker container monitoring  
 - [ ] Web dashboard interface
 - [ ] Email alert notifications
 - [ ] Historical data logging
 - [ ] Plugin system for custom metrics
 - [ ] JSON/CSV export functionality
-
-## Troubleshooting
-
-### Common Issues
-
-**High memory usage alerts on macOS**: This is often normal due to macOS memory management. Adjust thresholds in config.toml if needed.
-
-**Permission denied errors**: Some system information requires elevated privileges on certain platforms.
-
-**Missing dependencies**: Ensure you have the latest Rust toolchain installed.
+- [ ] Interactive terminal UI mode
 
 ## Acknowledgments
 
 - Built with [sysinfo](https://github.com/GuillaumeGomez/sysinfo) for cross-platform system information
 - Inspired by traditional monitoring tools like `htop` and `top`
 - Thanks to the Rust community for excellent crates and documentation
+
+## Support
+
+- [Documentation](https://docs.rs/system-monitor)
+- [Issue Tracker](https://github.com/jagguvarma15/system-monitor/issues)
+- [Discussions](https://github.com/jagguvarma15/system-monitor/discussions)
+- [crates.io](https://crates.io/crates/system-monitor)
+
+---
